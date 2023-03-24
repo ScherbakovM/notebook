@@ -27,4 +27,8 @@ public class UserController {
 
         throw new RuntimeException("User not found");
     }
+    public void updateUser(String userId, User update) {
+        update.setId(Long.parseLong(userId));
+        repository.update(Long.parseLong(userId), update);
+    }
 }

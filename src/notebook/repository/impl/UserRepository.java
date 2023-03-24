@@ -34,7 +34,7 @@ public class UserRepository implements GBRepository<User, Long> {
         long max = 0L;
         for (User u : users) {
             long id = u.getId();
-            if (max < id){
+            if (max < id) {
                 max = id;
             }
         }
@@ -42,7 +42,7 @@ public class UserRepository implements GBRepository<User, Long> {
         user.setId(next);
         users.add(user);
         List<String> lines = new ArrayList<>();
-        for (User u: users) {
+        for (User u : users) {
             lines.add(mapper.toInput(u));
         }
         operation.saveAll(lines);
@@ -56,11 +56,27 @@ public class UserRepository implements GBRepository<User, Long> {
 
     @Override
     public Optional<User> update(Long id, User user) {
-        return Optional.empty();
+        List<User> users = findAll();
+        User editUser = users.stream()
+                .filter(u -> u.getId()
+                        .equals(id))
+                .findFirst().orElseThrow(() -> new RuntimeException("User not found"));
+        editUser.setFirstName(user.getFirstName());
+        editUser.setLastName(user.getLastName());
+        editUser.setPhone(user.getPhone());
+        write(users);
+        return Optional.of(user);
     }
 
     @Override
     public boolean delete(Long id) {
         return false;
+    }
+    private void write(List<User> users) {
+        List<String> lines = new ArrayList<>();
+        for (User u: users) {
+            lines.add(mapper.toInput(u));
+        }
+        operation.saveAll(lines);
     }
 }

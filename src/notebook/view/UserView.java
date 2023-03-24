@@ -37,6 +37,9 @@ public class UserView {
                         throw new RuntimeException(e);
                     }
                     break;
+                case UPDATE:
+                    String userId = prompt("Enter user id: ");
+                    userController.updateUser(userId, createUser());
             }
         }
     }
@@ -45,5 +48,11 @@ public class UserView {
         Scanner in = new Scanner(System.in);
         System.out.print(message);
         return in.nextLine();
+    }
+    private User createUser() {
+        String firstName = prompt("Имя: ");
+        String lastName = prompt("Фамилия: ");
+        String phone = prompt("Номер телефона: ");
+        return new User(firstName, lastName, phone);
     }
 }
