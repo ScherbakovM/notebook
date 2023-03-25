@@ -30,13 +30,13 @@ public class FileOperation implements Operation<String> {
             // считаем сначала первую строку
             String line = reader.readLine();
             if (line != null) {
-                lines.add(line);
+                lines.add(line.replace(" ", ","));
             }
             while (line != null) {
                 // считываем остальные строки в цикле
                 line = reader.readLine();
-                if (line != null) {
-                    lines.add(line);
+                if (line != null && !line.isEmpty()) {
+                    lines.add(line.replace(" ", ","));
                 }
             }
             fr.close();
@@ -50,14 +50,24 @@ public class FileOperation implements Operation<String> {
     public void saveAll(List<String> data) {
         try (FileWriter writer = new FileWriter(fileName, false)) {
             for (String line : data) {
+                line = line.replace(",", " ");
                 // запись всей строки
                 writer.write(line);
                 // запись по символам
+                writer.append('\n');
                 writer.append('\n');
             }
             writer.flush();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<String> delDelimetr(List<String> data){
+        for (String line: data) {
+            if(line.equals("\n"))
+            data.remove(line);
+        }
+        return data;
     }
 }
