@@ -63,11 +63,5 @@ public class FileOperation implements Operation<String> {
         }
     }
 
-    public List<String> delDelimetr(List<String> data){
-        for (String line: data) {
-            if(line.equals("\n"))
-            data.remove(line);
-        }
-        return data;
-    }
+
 }
