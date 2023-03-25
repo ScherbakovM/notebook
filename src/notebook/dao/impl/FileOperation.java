@@ -23,17 +23,17 @@ public class FileOperation implements Operation<String> {
         List<String> lines = new ArrayList<>();
         try {
             File file = new File(fileName);
-            //создаем объект FileReader для объекта File
+            //Г±Г®Г§Г¤Г ГҐГ¬ Г®ГЎГєГҐГЄГІ FileReader Г¤Г«Гї Г®ГЎГєГҐГЄГІГ  File
             FileReader fr = new FileReader(file);
-            //создаем BufferedReader с существующего FileReader для построчного считывания
+            //Г±Г®Г§Г¤Г ГҐГ¬ BufferedReader Г± Г±ГіГ№ГҐГ±ГІГўГіГѕГ№ГҐГЈГ® FileReader Г¤Г«Гї ГЇГ®Г±ГІГ°Г®Г·Г­Г®ГЈГ® Г±Г·ГЁГІГ»ГўГ Г­ГЁГї
             BufferedReader reader = new BufferedReader(fr);
-            // считаем сначала первую строку
+            // Г±Г·ГЁГІГ ГҐГ¬ Г±Г­Г Г·Г Г«Г  ГЇГҐГ°ГўГіГѕ Г±ГІГ°Г®ГЄГі
             String line = reader.readLine();
             if (line != null) {
                 lines.add(line.replace(" ", ","));
             }
             while (line != null) {
-                // считываем остальные строки в цикле
+                // Г±Г·ГЁГІГ»ГўГ ГҐГ¬ Г®Г±ГІГ Г«ГјГ­Г»ГҐ Г±ГІГ°Г®ГЄГЁ Гў Г¶ГЁГЄГ«ГҐ
                 line = reader.readLine();
                 if (line != null && !line.isEmpty()) {
                     lines.add(line.replace(" ", ","));
@@ -51,9 +51,9 @@ public class FileOperation implements Operation<String> {
         try (FileWriter writer = new FileWriter(fileName, false)) {
             for (String line : data) {
                 line = line.replace(",", " ");
-                // запись всей строки
+                // Г§Г ГЇГЁГ±Гј ГўГ±ГҐГ© Г±ГІГ°Г®ГЄГЁ
                 writer.write(line);
-                // запись по символам
+                // Г§Г ГЇГЁГ±Гј ГЇГ® Г±ГЁГ¬ГўГ®Г«Г Г¬
                 writer.append('\n');
                 writer.append('\n');
             }
@@ -62,6 +62,4 @@ public class FileOperation implements Operation<String> {
             System.out.println(e.getMessage());
         }
     }
-
-
 }
