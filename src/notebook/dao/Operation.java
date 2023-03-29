@@ -7,6 +7,8 @@ import java.util.List;
  * @param <T> тип объекта для чтения/записи.
  */
 public interface Operation<T> {
-    List<T> readAll();
-    void saveAll(List<T> data);
+    List<T> readAllNewFormat();
+    List<T> readAllOldFormat();
+    void saveAllNewFormat(List<T> data);
+    void saveAllOldFormat(List<T> data);
 }

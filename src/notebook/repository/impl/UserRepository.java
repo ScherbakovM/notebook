@@ -20,7 +20,7 @@ public class UserRepository implements GBRepository<User, Long> {
 
     @Override
     public List<User> findAll() {
-        List<String> lines = operation.readAll();
+        List<String> lines = operation.readAllOldFormat();
         List<User> users = new ArrayList<>();
         for (String line : lines) {
             users.add(mapper.toOutput(line));
@@ -45,7 +45,7 @@ public class UserRepository implements GBRepository<User, Long> {
         for (User u : users) {
             lines.add(mapper.toInput(u));
         }
-        operation.saveAll(lines);
+        operation.saveAllOldFormat(lines);
         return user;
     }
 
@@ -77,6 +77,6 @@ public class UserRepository implements GBRepository<User, Long> {
         for (User u: users) {
             lines.add(mapper.toInput(u));
         }
-        operation.saveAll(lines);
+        operation.saveAllOldFormat(lines);
     }
 }

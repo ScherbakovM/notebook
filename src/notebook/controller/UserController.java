@@ -17,7 +17,7 @@ public class UserController {
         repository.create(user);
     }
 
-    public User readUser(Long userId) throws Exception {
+    public User readUser(Long userId) {
         List<User> users = repository.findAll();
         for (User user : users) {
             if (Objects.equals(user.getId(), userId)) {

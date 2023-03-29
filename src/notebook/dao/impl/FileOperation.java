@@ -19,21 +19,19 @@ public class FileOperation implements Operation<String> {
     }
 
     @Override
-    public List<String> readAll() {
+    public List<String> readAllNewFormat() {
         List<String> lines = new ArrayList<>();
         try {
             File file = new File(fileName);
-            //ñîçäàåì îáúåêò FileReader äëÿ îáúåêòà File
             FileReader fr = new FileReader(file);
-            //ñîçäàåì BufferedReader ñ ñóùåñòâóþùåãî FileReader äëÿ ïîñòðî÷íîãî ñ÷èòûâàíèÿ
             BufferedReader reader = new BufferedReader(fr);
-            // ñ÷èòàåì ñíà÷àëà ïåðâóþ ñòðîêó
+
             String line = reader.readLine();
             if (line != null) {
                 lines.add(line.replace(" ", ","));
             }
             while (line != null) {
-                // ñ÷èòûâàåì îñòàëüíûå ñòðîêè â öèêëå
+
                 line = reader.readLine();
                 if (line != null && !line.isEmpty()) {
                     lines.add(line.replace(" ", ","));
@@ -47,14 +45,51 @@ public class FileOperation implements Operation<String> {
     }
 
     @Override
-    public void saveAll(List<String> data) {
+    public List<String> readAllOldFormat() {
+        List<String> lines = new ArrayList<>();
+        try {
+            File file = new File(fileName);
+            FileReader fr = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fr);
+            String line = reader.readLine();
+            if (line != null) {
+                lines.add(line);
+            }
+            while (line != null) {
+                line = reader.readLine();
+                if (line != null) {
+                    lines.add(line);
+                }
+            }
+            fr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+    @Override
+    public void saveAllNewFormat(List<String> data) {
         try (FileWriter writer = new FileWriter(fileName, false)) {
             for (String line : data) {
                 line = line.replace(",", " ");
-                // çàïèñü âñåé ñòðîêè
                 writer.write(line);
-                // çàïèñü ïî ñèìâîëàì
                 writer.append('\n');
+                writer.append('\n');
+            }
+            writer.flush();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void saveAllOldFormat(List<String> data) {
+        try (FileWriter writer = new FileWriter(fileName, false)) {
+            for (String line : data) {
+                // ������ ���� ������
+                writer.write(line);
+                // ������ �� ��������
                 writer.append('\n');
             }
             writer.flush();
