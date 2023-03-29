@@ -39,7 +39,11 @@ public class UserView {
                     break;
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
-                    userController.updateUser(userId, createUser());
+                    String updateName = prompt("Имя: ");
+                    String updateLastName = prompt("Фамилия: ");
+                    String updatePhone = prompt("Номер телефона: ");
+                    User updatedUser = new User(updateName, updateLastName, updatePhone);
+                    userController.updateUser(userId, updatedUser);
             }
         }
     }
@@ -49,10 +53,5 @@ public class UserView {
         System.out.print(message);
         return in.nextLine();
     }
-    private User createUser() {
-        String firstName = prompt("Имя: ");
-        String lastName = prompt("Фамилия: ");
-        String phone = prompt("Номер телефона: ");
-        return new User(firstName, lastName, phone);
-    }
+
 }
