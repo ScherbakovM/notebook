@@ -25,13 +25,11 @@ public class FileOperation implements Operation<String> {
             File file = new File(fileName);
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
-
             String line = reader.readLine();
             if (line != null) {
                 lines.add(line.replace(" ", ","));
             }
             while (line != null) {
-
                 line = reader.readLine();
                 if (line != null && !line.isEmpty()) {
                     lines.add(line.replace(" ", ","));
@@ -87,9 +85,7 @@ public class FileOperation implements Operation<String> {
     public void saveAllOldFormat(List<String> data) {
         try (FileWriter writer = new FileWriter(fileName, false)) {
             for (String line : data) {
-                // запись всей строки
                 writer.write(line);
-                // запись по символам
                 writer.append('\n');
             }
             writer.flush();
