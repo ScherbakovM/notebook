@@ -13,5 +13,6 @@ public interface GBRepository<E, I> {
     E create(E e);
     Optional<E> findById(I id);
     Optional<E> update(I id, E e);
-    boolean delete(I id);
+    void delete(Long id);
+    void printList();
 }

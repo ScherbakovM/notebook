@@ -19,7 +19,7 @@ public class UserRepository implements GBRepository<User, Long> {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll( ) {
         List<String> lines = operation.readAllOldFormat();
         List<User> users = new ArrayList<>();
         for (String line : lines) {
@@ -60,7 +60,7 @@ public class UserRepository implements GBRepository<User, Long> {
         User editUser = users.stream()
                 .filter(u -> u.getId()
                         .equals(id))
-                .findFirst().orElseThrow(() -> new RuntimeException("User not found"));
+                .findFirst().orElseThrow(( ) -> new RuntimeException("User not found"));
         editUser.setFirstName(user.getFirstName());
         editUser.setLastName(user.getLastName());
         editUser.setPhone(user.getPhone());
@@ -69,14 +69,30 @@ public class UserRepository implements GBRepository<User, Long> {
     }
 
     @Override
-    public boolean delete(Long id) {
-        return false;
+    public void delete(Long id) {
+        List<User> user = findAll();
+        User editUser = user.stream()
+                .filter(u -> u.getId()
+                        .equals(id))
+                .findFirst().orElseThrow(( ) -> new RuntimeException("User not found"));
+        user.remove(editUser);
+        write(user);
     }
+
     private void write(List<User> users) {
         List<String> lines = new ArrayList<>();
-        for (User u: users) {
+        for (User u : users) {
             lines.add(mapper.toInput(u));
         }
         operation.saveAllOldFormat(lines);
+    }
+
+    @Override
+    public void printList( ) {
+        List<User> userList = findAll();
+        for (User user :
+                userList) {
+            System.out.println(user);
+        }
     }
 }

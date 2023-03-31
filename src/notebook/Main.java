@@ -2,6 +2,8 @@ package notebook;
 
 import notebook.controller.UserController;
 import notebook.dao.impl.FileOperation;
+import notebook.log.Logger;
+import notebook.log.impl.ConsoleLogger;
 import notebook.model.User;
 import notebook.repository.GBRepository;
 import notebook.repository.impl.UserRepository;
@@ -15,7 +17,8 @@ public class Main {
         createDB();
         FileOperation fileOperation = new FileOperation(DB_PATH);
         GBRepository<User, Long> repository = new UserRepository(fileOperation);
-        UserController controller = new UserController(repository);
+        Logger logger = new ConsoleLogger();
+        UserController controller = new UserController(repository, logger);
         UserView view = new UserView(controller);
         view.run();
     }

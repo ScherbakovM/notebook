@@ -1,6 +1,7 @@
 package notebook.view;
 
 import notebook.controller.UserController;
+import notebook.log.Logger;
 import notebook.model.User;
 import notebook.util.Commands;
 
@@ -13,7 +14,7 @@ public class UserView {
         this.userController = userController;
     }
 
-    public void run(){
+    public void run( ) {
         Commands com;
 
         while (true) {
@@ -37,6 +38,9 @@ public class UserView {
                         throw new RuntimeException(e);
                     }
                     break;
+                case LIST:
+                    userController.printList();
+                    break;
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
                     String updateName = prompt("Имя: ");
@@ -44,6 +48,11 @@ public class UserView {
                     String updatePhone = prompt("Номер телефона: ");
                     User updatedUser = new User(updateName, updateLastName, updatePhone);
                     userController.updateUser(userId, updatedUser);
+                    break;
+                case DELETE:
+                    String delId = prompt("Enter user id: ");
+                    userController.deleteUser(delId);
+                    break;
             }
         }
     }
